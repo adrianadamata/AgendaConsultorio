@@ -1,6 +1,6 @@
 using System;
 
-namespace AgendaConsultorio.Models
+namespace AgendaConsultorio.Models.ViewModels
 {
     public class ErrorViewModel
     {
