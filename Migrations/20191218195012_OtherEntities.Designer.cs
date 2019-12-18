@@ -4,14 +4,16 @@ using AgendaConsultorio.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace AgendaConsultorio.Migrations
 {
     [DbContext(typeof(AgendaConsultorioContext))]
-    partial class AgendaConsultorioContextModelSnapshot : ModelSnapshot
+    [Migration("20191218195012_OtherEntities")]
+    partial class OtherEntities
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -46,7 +48,7 @@ namespace AgendaConsultorio.Migrations
 
                     b.Property<DateTime>("DateTimeInitial");
 
-                    b.Property<int>("MedicoId");
+                    b.Property<int?>("MedicoId");
 
                     b.Property<string>("Name");
 
@@ -61,8 +63,7 @@ namespace AgendaConsultorio.Migrations
                 {
                     b.HasOne("AgendaConsultorio.Models.Medico", "Medico")
                         .WithMany("Pacientes")
-                        .HasForeignKey("MedicoId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("MedicoId");
                 });
 #pragma warning restore 612, 618
         }

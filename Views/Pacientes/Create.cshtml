@@ -1,0 +1,41 @@
+﻿@model AgendaConsultorio.Models.Paciente
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<h4>Paciente</h4>
+<hr />
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class=" form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="BirthDate" class="control-label"></label>
+                <input asp-for="BirthDate" class=" form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="DateTimeInitial" class="control-label"> </label>
+                <input asp-for="DateTimeInitial" class=" form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="DateTimeEnd" class="control-label"> </label>
+                <input asp-for="DateTimeEnd" class=" form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="Comments" class="control-label"> </label>
+                <input asp-for="Comments" class=" form-control" />
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+

@@ -1,15 +1,33 @@
 ﻿
+using System;
+using System.ComponentModel.DataAnnotations;
+
 namespace AgendaConsultorio.Models
 {
     public class Paciente
     {
         public int Id { get; set; }
+
+        [Display(Name = "Nome do Paciente")]
         public string Name { get; set; }
+
+        [Display(Name = "Data de Nascimento")]
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
         public DateTime BirthDate { get; set; }
+
+        [Display(Name = "Início da Consulta")]
         public DateTime DateTimeInitial { get; set; }
+
+        [Display(Name = "Fim da Consulta")]
         public DateTime DateTimeEnd { get; set; }
+
+        [Display(Name = "Observações")]
         public string Comments { get; set; }
+
         public Medico Medico { get; set; }
+
+        public int MedicoId { get; set; }
 
         public Paciente()
         {
@@ -26,9 +44,9 @@ namespace AgendaConsultorio.Models
             Comments = comments;
             Medico = medico;
         }
-        public void AddPaciente()
-        {
-
-        }
+ //       public override string ToString()
+//        {
+//            return Paciente.Name;
+//        }
     }
 }

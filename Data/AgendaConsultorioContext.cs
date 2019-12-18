@@ -13,6 +13,7 @@ namespace AgendaConsultorio.Models
         {
         }
 
-        public DbSet<AgendaConsultorio.Models.Medico> Medico { get; set; }
+        public DbSet<Medico> Medico { get; set; }
+        public DbSet<Paciente> Paciente { get; set; }
     }
 }
