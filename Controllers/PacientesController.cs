@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using AgendaConsultorio.Models;
 using AgendaConsultorio.Models.ViewModels;
 using AgendaConsultorio.Services;
+using AgendaConsultorio.Services.Exceptions;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AgendaConsultorio.Controllers
@@ -76,6 +77,45 @@ namespace AgendaConsultorio.Controllers
                 return NotFound();
             }
             return View(obj);
+        }
+
+        public IActionResult Edit(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var obj = _pacienteService.FindById(id.Value);
+            if (obj == null)
+            {
+                return NotFound();
+            }
+            List<Medico> medicos = _medicoService.FindAll();
+            PacienteFormViewModel viewModel = new PacienteFormViewModel { Paciente = obj, Medicos = medicos };
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Edit(int id, Paciente paciente)
+        {
+            if (id != paciente.Id)
+            {
+                return BadRequest();
+            }
+            try
+            {
+                _pacienteService.Update(paciente);
+                return RedirectToAction(nameof(Index));
+            }
+            catch (NotFoundException)
+            {
+                return NotFound();
+            }
+            catch (DbConcurrencyException)
+            {
+                return BadRequest();
+            }
         }
     }
 }
