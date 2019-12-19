@@ -1,0 +1,53 @@
+﻿@model AgendaConsultorio.Models.Paciente
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<h3> O paciente será excluído. Deseja continuar com a operação? </h3>
+
+<div>
+    <h4> Paciente </h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.BirthDate)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.BirthDate)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.DateTimeInitial)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.DateTimeInitial)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.DateTimeEnd)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.DateTimeEnd)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Comments)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Comments)
+        </dd>
+    </dl>
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="Id" />
+        <input type="submit" value="Delete" class="btn btn-danger" />
+        <a asp-action="Index">Back To List</a>
+    </form>
+</div>
+
+

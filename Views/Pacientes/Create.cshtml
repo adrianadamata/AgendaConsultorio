@@ -1,4 +1,4 @@
-﻿@model AgendaConsultorio.Models.Paciente
+﻿@model AgendaConsultorio.Models.ViewModels.PacienteFormViewModel
 
 @{
     ViewData["Title"] = "Create";
@@ -13,27 +13,32 @@
     <div class="col-md-4">
         <form asp-action="Create">
             <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class=" form-control" />
+                <label asp-for="Paciente.Name" class="control-label"></label>
+                <input asp-for="Paciente.Name" class=" form-control" />
             </div>
             <div class="form-group">
-                <label asp-for="BirthDate" class="control-label"></label>
-                <input asp-for="BirthDate" class=" form-control" />
+                <label asp-for="Paciente.BirthDate" class="control-label"></label>
+                <input asp-for="Paciente.BirthDate" class=" form-control" />
             </div>
             <div class="form-group">
-                <label asp-for="DateTimeInitial" class="control-label"> </label>
-                <input asp-for="DateTimeInitial" class=" form-control" />
+                <label asp-for="Paciente.DateTimeInitial" class="control-label"> </label>
+                <input asp-for="Paciente.DateTimeInitial" class=" form-control" />
             </div>
             <div class="form-group">
-                <label asp-for="DateTimeEnd" class="control-label"> </label>
-                <input asp-for="DateTimeEnd" class=" form-control" />
+                <label asp-for="Paciente.DateTimeEnd" class="control-label"> </label>
+                <input asp-for="Paciente.DateTimeEnd" class=" form-control" />
             </div>
             <div class="form-group">
-                <label asp-for="Comments" class="control-label"> </label>
-                <input asp-for="Comments" class=" form-control" />
+                <label asp-for="Paciente.Comments" class="control-label"> </label>
+                <input asp-for="Paciente.Comments" class=" form-control" />
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+            <div class="form-group">
+                <label asp-for="Paciente.MedicoId" class="control-label"></label>
+                <select asp-for="Paciente.MedicoId" asp-items="@(new SelectList(Model.Medicos,"Id",
+"Name"))" class="form-control"></select>
             </div>
         </form>
     </div>

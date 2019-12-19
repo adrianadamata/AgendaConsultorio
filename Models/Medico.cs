@@ -27,10 +27,10 @@ namespace AgendaConsultorio.Models
         {
             Pacientes.Remove(paciente);
         }
-//        public Paciente SearchPaciente(string busca)
-//        {
-//            public List<Paciente> Search = Pacientes.FindAll(x => x.Name == busca);
-            
-//        }
+        //        public Paciente SearchPaciente(string busca)
+        //        {
+        //            public List<Paciente> Search = Pacientes.FindAll(x => x.Name == busca);
+
+        //        }
     }
 }

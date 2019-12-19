@@ -8,7 +8,7 @@ namespace AgendaConsultorio.Models
 {
     public class AgendaConsultorioContext : DbContext
     {
-        public AgendaConsultorioContext (DbContextOptions<AgendaConsultorioContext> options)
+        public AgendaConsultorioContext(DbContextOptions<AgendaConsultorioContext> options)
             : base(options)
         {
         }

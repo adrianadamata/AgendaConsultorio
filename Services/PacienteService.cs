@@ -10,20 +10,30 @@ namespace AgendaConsultorio.Services
     {
         private readonly AgendaConsultorioContext _context;
 
-        public PacienteService (AgendaConsultorioContext context)
+        public PacienteService(AgendaConsultorioContext context)
         {
             _context = context;
         }
 
         public List<Paciente> FindAll()
         {
-            return _context.Paciente.ToList();
+            return _context.Paciente.OrderBy(x => x.DateTimeInitial).ToList();
         }
 
-        public void Insert (Paciente obj)
+        public void Insert(Paciente obj)
         {
-            obj.Medico = _context.Medico.First();
             _context.Add(obj);
+            _context.SaveChanges();
+        }
+
+        public Paciente FindById(int id)
+        {
+            return _context.Paciente.FirstOrDefault(obj => obj.Id == id);
+        }
+        public void Remove(int id)
+        {
+            var obj = _context.Paciente.Find(id);
+            _context.Paciente.Remove(obj);
             _context.SaveChanges();
         }
     }

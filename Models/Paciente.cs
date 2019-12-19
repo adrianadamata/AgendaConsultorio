@@ -44,9 +44,9 @@ namespace AgendaConsultorio.Models
             Comments = comments;
             Medico = medico;
         }
- //       public override string ToString()
-//        {
-//            return Paciente.Name;
-//        }
+        //       public override string ToString()
+        //        {
+        //            return Paciente.Name;
+        //        }
     }
 }
