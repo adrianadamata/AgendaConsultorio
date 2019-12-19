@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace AgendaConsultorio.Services
 {
@@ -28,7 +29,7 @@ namespace AgendaConsultorio.Services
 
         public Paciente FindById(int id)
         {
-            return _context.Paciente.FirstOrDefault(obj => obj.Id == id);
+            return _context.Paciente.Include(obj => obj.Medico).FirstOrDefault(obj => obj.Id == id);
         }
         public void Remove(int id)
         {
