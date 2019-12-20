@@ -8,6 +8,7 @@ namespace AgendaConsultorio.Models
     {
         public int Id { get; set; }
 
+        [Required(ErrorMessage = "Campo obrigatório")]
         [Display(Name = "Nome do Paciente")]
         public string Name { get; set; }
 
@@ -16,6 +17,7 @@ namespace AgendaConsultorio.Models
         [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
         public DateTime BirthDate { get; set; }
 
+        [Required(ErrorMessage = "Campo obrigatório")]
         [Display(Name = "Início da Consulta")]
         public DateTime DateTimeInitial { get; set; }
 
@@ -25,8 +27,10 @@ namespace AgendaConsultorio.Models
         [Display(Name = "Observações")]
         public string Comments { get; set; }
 
+        [Display(Name = "Médico")]
         public Medico Medico { get; set; }
 
+        [Display(Name = "Médico")]
         public int MedicoId { get; set; }
 
         public Paciente()
