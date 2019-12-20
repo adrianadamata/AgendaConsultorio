@@ -17,39 +17,42 @@ namespace AgendaConsultorio.Services
             _context = context;
         }
 
-        public List<Paciente> FindAll()
+        public async Task<List<Paciente>> FindAllAsync()
         {
-            return _context.Paciente.OrderBy(x => x.DateTimeInitial).ToList();
+            return await _context.Paciente.OrderBy(x => x.DateTimeInitial).ToListAsync();
+
         }
 
-        public void Insert(Paciente obj)
+        public async Task InsertAsync(Paciente obj)
         {
             _context.Add(obj);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
 
-        public Paciente FindById(int id)
+        public async Task<Paciente> FindByIdAsync(int id)
         {
-            return _context.Paciente.Include(obj => obj.Medico).FirstOrDefault(obj => obj.Id == id);
+            return await _context.Paciente.Include(obj => obj.Medico).FirstOrDefaultAsync(obj => obj.Id == id);
         }
 
-        public void Remove(int id)
+        public async Task RemoveAsync(int id)
         {
-            var obj = _context.Paciente.Find(id);
+            var obj = await _context.Paciente.FindAsync(id);
             _context.Paciente.Remove(obj);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
 
-        public void Update(Paciente obj)
+        public async Task UpdateAsync(Paciente obj)
         {
-            if (!_context.Paciente.Any(x => x.Id == obj.Id))
+
+            bool hasAny = await _context.Paciente.AnyAsync(x => x.Id == obj.Id);
+            if (!hasAny)
             {
                 throw new NotFoundException("Id not found");
             }
             try
             {
                 _context.Update(obj);
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException e)
             {

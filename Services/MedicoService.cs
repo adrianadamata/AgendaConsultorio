@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace AgendaConsultorio.Services
 {
@@ -14,9 +15,9 @@ namespace AgendaConsultorio.Services
         {
             _context = context;
         }
-        public List<Medico> FindAll()
+        public async Task<List<Medico>> FindAllAsync()
         {
-            return _context.Medico.OrderBy(x => x.Name).ToList();
+            return await _context.Medico.OrderBy(x => x.Name).ToListAsync();
         }
     }
 }

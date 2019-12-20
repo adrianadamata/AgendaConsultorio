@@ -23,40 +23,40 @@ namespace AgendaConsultorio.Controllers
             _medicoService = medicoService;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            var list = _pacienteService.FindAll();
+            var list = await _pacienteService.FindAllAsync();
             return View(list);
         }
 
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
-            var medicos = _medicoService.FindAll();
+            var medicos = await _medicoService.FindAllAsync();
             var viewModel = new PacienteFormViewModel { Medicos = medicos };
             return View(viewModel);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(Paciente paciente)
+        public async Task<IActionResult> Create(Paciente paciente)
         {
             if (!ModelState.IsValid)
             {
-                var medicos = _medicoService.FindAll();
+                var medicos = await _medicoService.FindAllAsync();
                 var viewModel = new PacienteFormViewModel { Paciente = paciente, Medicos = medicos };
                 return View(viewModel);
             }
-            _pacienteService.Insert(paciente);
+            await _pacienteService.InsertAsync(paciente);
             return RedirectToAction(nameof(Index));
         }
 
-        public IActionResult Delete(int? id)
+        public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
             {
                 return RedirectToAction(nameof(Error), new { message = "Id not provided" });
             }
-            var obj = _pacienteService.FindById(id.Value);
+            var obj = await _pacienteService.FindByIdAsync(id.Value);
             if (obj == null)
             {
                 return RedirectToAction(nameof(Error), new { message = "Id not found" });
@@ -66,19 +66,19 @@ namespace AgendaConsultorio.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
-            _pacienteService.Remove(id);
+            await _pacienteService.RemoveAsync(id);
             return RedirectToAction(nameof(Index));
         }
 
-        public IActionResult Details(int? id)
+        public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
             {
                 return RedirectToAction(nameof(Error), new { message = "Id not provided" });
             }
-            var obj = _pacienteService.FindById(id.Value);
+            var obj = await _pacienteService.FindByIdAsync(id.Value);
             if (obj == null)
             {
                 return RedirectToAction(nameof(Error), new { message = "Id not found" });
@@ -86,29 +86,29 @@ namespace AgendaConsultorio.Controllers
             return View(obj);
         }
 
-        public IActionResult Edit(int? id)
+        public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
             {
                 return RedirectToAction(nameof(Error), new { message = "Id not provided" });
             }
-            var obj = _pacienteService.FindById(id.Value);
+            var obj = await _pacienteService.FindByIdAsync(id.Value);
             if (obj == null)
             {
                 return RedirectToAction(nameof(Error), new { message = "Id not found" });
             }
-            List<Medico> medicos = _medicoService.FindAll();
+            List<Medico> medicos = await _medicoService.FindAllAsync();
             PacienteFormViewModel viewModel = new PacienteFormViewModel { Paciente = obj, Medicos = medicos };
             return View(viewModel);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(int id, Paciente paciente)
+        public async Task<IActionResult> Edit(int id, Paciente paciente)
         {
             if (!ModelState.IsValid)
             {
-                var medicos = _medicoService.FindAll();
+                var medicos = await _medicoService.FindAllAsync();
                 var viewModel = new PacienteFormViewModel { Paciente = paciente, Medicos = medicos };
                 return View(viewModel);
             }
@@ -118,7 +118,7 @@ namespace AgendaConsultorio.Controllers
             }
             try
             {
-                _pacienteService.Update(paciente);
+                await _pacienteService.UpdateAsync(paciente);
                 return RedirectToAction(nameof(Index));
             }
             catch (ApplicationException e)
