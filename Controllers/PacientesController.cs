@@ -7,7 +7,9 @@ using AgendaConsultorio.Models;
 using AgendaConsultorio.Models.ViewModels;
 using AgendaConsultorio.Services;
 using AgendaConsultorio.Services.Exceptions;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.EntityFrameworkCore;
 
 namespace AgendaConsultorio.Controllers
@@ -31,7 +33,6 @@ namespace AgendaConsultorio.Controllers
         {
             ViewData["search"] = search;
 
-            //var list = await _pacienteService.FindAllAsync();
             var pacientes = from pac in _context.Paciente select pac;
             if (!String.IsNullOrEmpty(search))
             {
@@ -51,6 +52,22 @@ namespace AgendaConsultorio.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Paciente paciente)
         {
+            bool hasAnyInitial = await _context.Paciente.AnyAsync(x =>
+            DateTime.Compare(x.DateTimeInitial, paciente.DateTimeInitial) <= 0 &&
+            DateTime.Compare(x.DateTimeEnd, paciente.DateTimeInitial) > 0);
+
+            bool hasAnyEnd = await _context.Paciente.AnyAsync(x =>
+            DateTime.Compare(x.DateTimeInitial, paciente.DateTimeEnd) <= 0 &&
+            DateTime.Compare(x.DateTimeEnd, paciente.DateTimeEnd) > 0);
+
+            if (hasAnyInitial)
+            {
+                ModelState.AddModelError("DateTimeInitial", "Este horário já está agendado.");
+            }
+            else if (hasAnyEnd)
+            {
+                ModelState.AddModelError("DateTimeEnd", "Este horário já está agendado.");
+            }
             if (!ModelState.IsValid)
             {
                 var medicos = await _medicoService.FindAllAsync();
