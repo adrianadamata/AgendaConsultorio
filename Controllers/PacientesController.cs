@@ -8,25 +8,36 @@ using AgendaConsultorio.Models.ViewModels;
 using AgendaConsultorio.Services;
 using AgendaConsultorio.Services.Exceptions;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace AgendaConsultorio.Controllers
 {
     public class PacientesController : Controller
     {
+        private readonly AgendaConsultorioContext _context;
+
         private readonly PacienteService _pacienteService;
 
         private readonly MedicoService _medicoService;
 
-        public PacientesController(PacienteService pacienteService, MedicoService medicoService)
+        public PacientesController(PacienteService pacienteService, MedicoService medicoService, AgendaConsultorioContext context)
         {
+            _context = context;
             _pacienteService = pacienteService;
             _medicoService = medicoService;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string search)
         {
-            var list = await _pacienteService.FindAllAsync();
-            return View(list);
+            ViewData["search"] = search;
+
+            //var list = await _pacienteService.FindAllAsync();
+            var pacientes = from pac in _context.Paciente select pac;
+            if (!String.IsNullOrEmpty(search))
+            {
+                pacientes = pacientes.Where(s => s.Name.Contains(search));
+            }
+            return View(await pacientes.AsNoTracking().ToListAsync());
         }
 
         public async Task<IActionResult> Create()
