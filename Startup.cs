@@ -38,7 +38,7 @@ namespace AgendaConsultorio
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             services.AddDbContext<AgendaConsultorioContext>(options =>
-                    options.UseSqlServer(Configuration.GetConnectionString("AgendaConsultorioContext")));
+            options.UseSqlServer(Configuration.GetConnectionString("AgendaConsultorioContext")));
             services.AddScoped<PacienteService>();
             services.AddScoped<MedicoService>();
         }
@@ -52,7 +52,7 @@ namespace AgendaConsultorio
             }
             else
             {
-                app.UseExceptionHandler("/Home/Error");
+                app.UseExceptionHandler("/Shared/Error");
                 app.UseHsts();
             }
 
@@ -64,7 +64,7 @@ namespace AgendaConsultorio
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                    template: "{controller=Pacientes}/{action=Index}/{id?}");
             });
         }
     }

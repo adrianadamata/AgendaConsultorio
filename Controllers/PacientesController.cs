@@ -41,6 +41,18 @@ namespace AgendaConsultorio.Controllers
             return View(await pacientes.AsNoTracking().ToListAsync());
         }
 
+        public async Task<IActionResult> IndexDate(string date)
+        {
+            ViewData["date"] = date;
+
+            var pacientes = from pac in _context.Paciente select pac;
+            if (!String.IsNullOrEmpty(date))
+            {
+                pacientes = pacientes.Where(s => (s.DateTimeInitial.Date.ToString() == date));
+            }
+            return View(await pacientes.AsNoTracking().ToListAsync());
+        }
+
         public async Task<IActionResult> Create()
         {
             var medicos = await _medicoService.FindAllAsync();

@@ -18,7 +18,16 @@
         </p>
     </div>
 </form>
-
+<form asp-action="IndexDate" method="get">
+    <div class="form-actions no-color">
+        <p>
+            Agenda do dia :
+            <input type="date" id="date" name="date" value="@ViewData["date"]" />
+            <input type="submit" value="Procurar" class="btn btn-default" /> |
+            <a asp-action="Index">Retornar para lista</a>
+        </p>
+    </div>
+</form>
 <table class=" table table-striped table-hover">
     <thead>
         <tr class="success">

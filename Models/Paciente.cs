@@ -1,5 +1,4 @@
-﻿
-using System;
+﻿using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace AgendaConsultorio.Models
@@ -21,10 +20,9 @@ namespace AgendaConsultorio.Models
         [Display(Name = "Início da Consulta")]
         public DateTime DateTimeInitial { get; set; }
 
-        //[RegularExpression(DateTimeEnd < DateTimeInitial), ErrorMessage = "A data final não pode ser maior que a data inicial")]
         [Display(Name = "Fim da Consulta")]
         public DateTime DateTimeEnd { get; set; }
-        
+
         [Display(Name = "Observações")]
         public string Comments { get; set; }
 
@@ -49,9 +47,5 @@ namespace AgendaConsultorio.Models
             Comments = comments;
             Medico = medico;
         }
-        //       public override string ToString()
-        //        {
-        //            return Paciente.Name;
-        //        }
     }
 }
