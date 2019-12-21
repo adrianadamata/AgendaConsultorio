@@ -52,22 +52,24 @@ namespace AgendaConsultorio.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Paciente paciente)
         {
-            bool hasAnyInitial = await _context.Paciente.AnyAsync(x =>
-            DateTime.Compare(x.DateTimeInitial, paciente.DateTimeInitial) <= 0 &&
-            DateTime.Compare(x.DateTimeEnd, paciente.DateTimeInitial) > 0);
-
-            bool hasAnyEnd = await _context.Paciente.AnyAsync(x =>
-            DateTime.Compare(x.DateTimeInitial, paciente.DateTimeEnd) <= 0 &&
-            DateTime.Compare(x.DateTimeEnd, paciente.DateTimeEnd) > 0);
-
-            if (hasAnyInitial)
+            bool dateInvalid = (DateTime.Compare(paciente.DateTimeInitial, paciente.DateTimeEnd) >= 0);
+            if (dateInvalid)
             {
-                ModelState.AddModelError("DateTimeInitial", "Este horário já está agendado.");
+                ModelState.AddModelError("paciente.DateTimeEnd", "Data final maior");
             }
-            else if (hasAnyEnd)
+            else
             {
-                ModelState.AddModelError("DateTimeEnd", "Este horário já está agendado.");
+                bool hasAnyHour = await _context.Paciente.AnyAsync(x =>
+                DateTime.Compare(x.DateTimeEnd, paciente.DateTimeInitial) > 0 &&
+                DateTime.Compare(x.DateTimeInitial, paciente.DateTimeEnd) < 0);
+
+                if (hasAnyHour)
+                {
+                    ModelState.AddModelError("paciente.DateTimeInitial", "Horário já agendado.");
+                    ModelState.AddModelError("paciente.DateTimeEnd", "Horário já agendado.");
+                }
             }
+
             if (!ModelState.IsValid)
             {
                 var medicos = await _medicoService.FindAllAsync();
@@ -134,6 +136,24 @@ namespace AgendaConsultorio.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, Paciente paciente)
         {
+            bool dateInvalid = (DateTime.Compare(paciente.DateTimeInitial, paciente.DateTimeEnd) >= 0);
+            if (dateInvalid)
+            {
+                ModelState.AddModelError("paciente.DateTimeEnd", "Data final maior");
+            }
+            else
+            {
+                bool hasAnyHour = await _context.Paciente.AnyAsync(x =>
+                DateTime.Compare(x.DateTimeEnd, paciente.DateTimeInitial) > 0 &&
+                DateTime.Compare(x.DateTimeInitial, paciente.DateTimeEnd) < 0);
+
+                if (hasAnyHour)
+                {
+                    ModelState.AddModelError("paciente.DateTimeInitial", "Horário já agendado.");
+                    ModelState.AddModelError("paciente.DateTimeEnd", "Horário já agendado.");
+                }
+            }
+
             if (!ModelState.IsValid)
             {
                 var medicos = await _medicoService.FindAllAsync();
