@@ -29,7 +29,7 @@ namespace AgendaConsultorio.Controllers
             _medicoService = medicoService;
         }
 
-        public async Task<IActionResult> Index(string search)
+        public async Task<IActionResult> IndexPaciente(string search)
         {
             ViewData["search"] = search;
 
@@ -38,10 +38,10 @@ namespace AgendaConsultorio.Controllers
             {
                 pacientes = pacientes.Where(s => s.Name.Contains(search));
             }
-            return View(await pacientes.AsNoTracking().ToListAsync());
+            return View(await pacientes.OrderBy(s => s.DateTimeInitial).AsNoTracking().ToListAsync());
         }
 
-        public async Task<IActionResult> IndexDate(string date)
+        public async Task<IActionResult> Index(string date)
         {
             ViewData["date"] = date;
 
@@ -50,7 +50,7 @@ namespace AgendaConsultorio.Controllers
             {
                 pacientes = pacientes.Where(s => (s.DateTimeInitial.Date.ToString() == date));
             }
-            return View(await pacientes.AsNoTracking().ToListAsync());
+            return View(await pacientes.OrderBy(s => s.DateTimeInitial).AsNoTracking().ToListAsync());
         }
 
         public async Task<IActionResult> Create()
@@ -151,13 +151,14 @@ namespace AgendaConsultorio.Controllers
             bool dateInvalid = (DateTime.Compare(paciente.DateTimeInitial, paciente.DateTimeEnd) >= 0);
             if (dateInvalid)
             {
-                ModelState.AddModelError("paciente.DateTimeEnd", "Data final maior");
+                ModelState.AddModelError("paciente.DateTimeEnd", "Data final menor");
             }
             else
             {
                 bool hasAnyHour = await _context.Paciente.AnyAsync(x =>
                 DateTime.Compare(x.DateTimeEnd, paciente.DateTimeInitial) > 0 &&
-                DateTime.Compare(x.DateTimeInitial, paciente.DateTimeEnd) < 0);
+                DateTime.Compare(x.DateTimeInitial, paciente.DateTimeEnd) < 0 &&
+                (x.Id != paciente.Id));
 
                 if (hasAnyHour)
                 {

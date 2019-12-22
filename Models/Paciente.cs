@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace AgendaConsultorio.Models
@@ -13,7 +14,7 @@ namespace AgendaConsultorio.Models
 
         [Display(Name = "Data de Nascimento")]
         [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
+        //[DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
         public DateTime BirthDate { get; set; }
 
         [Required(ErrorMessage = "Campo obrigatório")]

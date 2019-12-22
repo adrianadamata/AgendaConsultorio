@@ -1,11 +1,15 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.ComponentModel.DataAnnotations;
 
 namespace AgendaConsultorio.Models
 {
     public class Medico
     {
         public int Id { get; set; }
+
+        [Required(ErrorMessage = "Campo obrigatório")]
+        [Display(Name = "Nome do Médico")]
         public string Name { get; set; }
         public ICollection<Paciente> Pacientes { get; set; } = new List<Paciente>();
 
@@ -27,10 +31,5 @@ namespace AgendaConsultorio.Models
         {
             Pacientes.Remove(paciente);
         }
-        //        public Paciente SearchPaciente(string busca)
-        //        {
-        //            public List<Paciente> Search = Pacientes.FindAll(x => x.Name == busca);
-
-        //        }
     }
 }
