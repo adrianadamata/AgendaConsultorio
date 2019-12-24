@@ -14,7 +14,6 @@ namespace AgendaConsultorio.Models
 
         [Display(Name = "Data de Nascimento")]
         [DataType(DataType.Date)]
-        //[DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
         public DateTime BirthDate { get; set; }
 
         [Required(ErrorMessage = "Campo obrigatório")]
