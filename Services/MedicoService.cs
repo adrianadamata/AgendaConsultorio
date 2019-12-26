@@ -19,5 +19,10 @@ namespace AgendaConsultorio.Services
         {
             return await _context.Medico.OrderBy(x => x.Name).ToListAsync();
         }
+
+        public async Task<bool> AnyMedicoAsync()
+        {
+            return await _context.Medico.AnyAsync();
+        }
     }
 }

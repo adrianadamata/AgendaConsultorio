@@ -11,6 +11,7 @@ namespace AgendaConsultorio.Models
         [Required(ErrorMessage = "Campo obrigatório")]
         [Display(Name = "Nome do Médico")]
         public string Name { get; set; }
+
         public ICollection<Paciente> Pacientes { get; set; } = new List<Paciente>();
 
         public Medico()

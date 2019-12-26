@@ -6,6 +6,8 @@ namespace AgendaConsultorio.Models
 {
     public class Paciente
     {
+        public bool IsValid { get; }
+
         public int Id { get; set; }
 
         [Required(ErrorMessage = "Campo obrigatório")]

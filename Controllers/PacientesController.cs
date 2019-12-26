@@ -22,13 +22,6 @@ namespace AgendaConsultorio.Controllers
 
         private readonly MedicoService _medicoService;
 
-        public PacientesController(PacienteService pacienteService, MedicoService medicoService, AgendaConsultorioContext context)
-        {
-            _context = context;
-            _pacienteService = pacienteService;
-            _medicoService = medicoService;
-        }
-
         public async Task<IActionResult> IndexPaciente(string search)
         {
             ViewData["search"] = search;
@@ -50,6 +43,7 @@ namespace AgendaConsultorio.Controllers
             {
                 pacientes = pacientes.Where(s => (s.DateTimeInitial.Date.ToString() == date));
             }
+
             return View(await pacientes.OrderBy(s => s.DateTimeInitial).AsNoTracking().ToListAsync());
         }
 
@@ -120,6 +114,7 @@ namespace AgendaConsultorio.Controllers
             {
                 return RedirectToAction(nameof(Error), new { message = "Id not provided" });
             }
+
             var obj = await _pacienteService.FindByIdAsync(id.Value);
             if (obj == null)
             {
@@ -195,6 +190,13 @@ namespace AgendaConsultorio.Controllers
                 RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier
             };
             return View(viewModel);
+        }
+
+        public PacientesController(PacienteService pacienteService, MedicoService medicoService, AgendaConsultorioContext context)
+        {
+            _context = context;
+            _pacienteService = pacienteService;
+            _medicoService = medicoService;
         }
     }
 }
