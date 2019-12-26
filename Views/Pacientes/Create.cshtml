@@ -1,0 +1,53 @@
+﻿@model AgendaConsultorio.Models.ViewModels.PacienteFormViewModel
+
+@{
+    ViewData["Title"] = "Novo Paciente";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<h4>Paciente</h4>
+<hr />
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div class="form-group">
+                <label asp-for="Paciente.Name" class="control-label"></label>
+                <input asp-for="Paciente.Name" class=" form-control" />
+                <span asp-validation-for="Paciente.Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Paciente.BirthDate" class="control-label"></label>
+                <input asp-for="Paciente.BirthDate" class=" form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="Paciente.DateTimeInitial" class="control-label"> </label>
+                <input asp-for="Paciente.DateTimeInitial" class=" form-control" />
+                <span asp-validation-for="Paciente.DateTimeInitial" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Paciente.DateTimeEnd" class="control-label"> </label>
+                <input asp-for="Paciente.DateTimeEnd" class=" form-control" />
+                <span asp-validation-for="Paciente.DateTimeEnd" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Paciente.Comments" class="control-label"> </label>
+                <input asp-for="Paciente.Comments" class=" form-control" />
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Salvar" class="btn btn-default" />
+            </div>
+            <div class="form-group">
+                <label asp-for="Paciente.MedicoId" class="control-label"></label>
+                <select asp-for="Paciente.MedicoId" asp-items="@(new SelectList(Model.Medicos,"Id",
+"Name"))" class="form-control"></select>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts
+{
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

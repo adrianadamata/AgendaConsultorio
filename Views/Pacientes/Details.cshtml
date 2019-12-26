@@ -1,0 +1,52 @@
+﻿@model AgendaConsultorio.Models.Paciente
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>@ViewData["Title"]</h2>
+<div>
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.BirthDate)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.BirthDate)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.DateTimeInitial)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.DateTimeInitial)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.DateTimeEnd)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.DateTimeEnd)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Comments)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Comments)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Medico)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Medico.Name)
+        </dd>
+    </dl>
+</div>
+
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-default">Edit</a>
+    <a asp-action="Index">Back to list</a>
+</div>
+
