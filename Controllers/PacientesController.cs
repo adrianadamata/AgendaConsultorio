@@ -6,10 +6,8 @@ using System.Threading.Tasks;
 using AgendaConsultorio.Models;
 using AgendaConsultorio.Models.ViewModels;
 using AgendaConsultorio.Services;
-using AgendaConsultorio.Services.Exceptions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.EntityFrameworkCore;
 
 namespace AgendaConsultorio.Controllers
